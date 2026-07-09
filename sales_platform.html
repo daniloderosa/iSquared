@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pain Points · RDS Advertising · Solution Design</title>
+<title>Sales Platform · RDS Advertising · Solution Design</title>
 <style>
   :root{
     --ink:#5A5A5A;
@@ -101,71 +101,37 @@
   }
   header.page-head p.intro{font-size:15px;line-height:1.6;color:var(--ink);max-width:1240px;opacity:.92}
 
-  .cat{display:flex;align-items:center;gap:11px;margin:26px 0 20px}
+  .cat{display:flex;align-items:center;gap:11px;margin:26px 0 24px}
   .cat .ic{width:22px;height:22px;flex:0 0 22px;color:var(--green)}
   .cat .ic svg{width:100%;height:100%;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
   .cat .txt{color:var(--green);font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
   .cat .line{flex:1;height:1px;background:var(--cat-line)}
 
-  .chev{width:22px;height:22px;flex:0 0 22px;color:var(--ink);transition:transform .3s ease-out}
-  .chev svg{width:100%;height:100%;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-
-  .placeholder{padding:14px 0 6px;text-align:center;color:var(--muted)}
-  .placeholder .ic{display:inline-flex;width:32px;height:32px;color:var(--green);margin-bottom:10px}
-  .placeholder .ic svg{width:100%;height:100%;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
-  .placeholder b{display:block;color:var(--ink);font-size:14.5px;margin-bottom:4px}
-  .placeholder span{font-size:13.5px}
-
-  /* ===== category tab switcher ===== */
-  .cat-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,28px);margin-bottom:0}
-  .cat-tab{
-    border-radius:12px;padding:20px 22px;text-align:left;border:1px solid var(--card-line);
-    background:var(--card);color:var(--ink);cursor:pointer;font-family:inherit;
-    transition:background .3s ease-out,border-color .3s ease-out,color .3s ease-out;
+  /* ===== solution cards grid ===== */
+  .sol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .sol-card{
+    position:relative;background:#fff;border:1px solid var(--card-line);border-radius:12px;
+    padding:26px;overflow:hidden;transition:box-shadow .3s ease-out,border-color .3s ease-out;
   }
-  .cat-tab .head{display:flex;align-items:center;gap:14px;margin-bottom:12px}
-  .cat-tab .icon-badge{width:52px;height:48px;border-radius:8px;background:rgba(90,90,90,.05);display:flex;align-items:center;justify-content:center;flex:0 0 52px;transition:background .3s ease-out}
-  .cat-tab .icon-badge .ic{width:18px;height:16px;color:var(--ink)}
-  .cat-tab .icon-badge svg{width:100%;height:100%}
-  .cat-tab .title{font-size:17px;font-weight:400;line-height:1.3}
-  .cat-tab .title b{font-size:20px;font-weight:700;margin-right:2px}
-  .cat-tab .desc{font-size:13.5px;line-height:1.5;color:var(--muted)}
-  .cat-tab.active{background:var(--green);border-color:var(--green);color:#fff}
-  .cat-tab.active .icon-badge{background:rgba(255,255,255,.2)}
-  .cat-tab.active .icon-badge .ic{color:#fff}
-  .cat-tab.active .desc{color:rgba(255,255,255,.92)}
+  .sol-card:hover{border-color:var(--green);box-shadow:0 10px 28px -18px rgba(109,160,85,.6)}
+  .sol-card .badge{
+    position:absolute;top:-14px;right:22px;width:50px;height:50px;border-radius:10px;
+    background:var(--green);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 12px -4px rgba(0,0,0,.25);transition:background .3s ease-out;
+  }
+  .sol-card .badge .ic{width:24px;height:24px;color:#fff}
+  .sol-card .badge .ic svg{width:100%;height:100%;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .sol-card h3{font-size:18px;font-weight:600;color:var(--ink);margin:8px 56px 16px 0;line-height:1.3}
+  .sol-card .preview{background:rgba(90,90,90,.15);border-radius:8px;height:160px;margin-bottom:16px}
+  .sol-card p.desc{font-size:13.5px;line-height:1.55;color:var(--muted)}
 
-  .cat-tab .divider{height:1px;background:rgba(90,90,90,.12);margin:14px 0 12px;transition:background .3s ease-out}
-  .cat-tab.active .divider{background:rgba(255,255,255,.25)}
-  .cat-tab .progress{display:flex;align-items:center;gap:10px}
-  .cat-tab .progress .track{flex:1;height:9px;border-radius:5px;background:rgba(90,90,90,.08);overflow:hidden}
-  .cat-tab .progress .fill{height:100%;border-radius:5px;background:rgba(90,90,90,.75);transition:width .3s ease-out}
-  .cat-tab .progress .pct{font-size:12.5px;font-weight:600;color:var(--ink)}
-  .cat-tab.active .progress .track{background:rgba(255,255,255,.2)}
-  .cat-tab.active .progress .fill{background:#fff}
-  .cat-tab.active .progress .pct{color:#fff}
-
-  /* ===== connector row: down-arrow under active tab, divider elsewhere ===== */
-  .cat-connector{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,28px);margin:0 0 20px}
-  .cat-connector .cell{position:relative;height:26px;display:flex;align-items:center;justify-content:center}
-  .cat-connector .cell::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:var(--card-line)}
-  .cat-connector .cell.active::before{display:none}
-  .cat-connector .arrow{width:14px;height:22px;color:var(--green)}
-  .cat-connector .arrow svg{width:100%;height:100%}
-
-  /* ===== pain point rows (tab content) ===== */
-  .pp2-list{display:flex;flex-direction:column;gap:12px}
-  .pp2-row{background:var(--card);border:1px solid var(--card-line);border-radius:12px;overflow:hidden;transition:background .3s ease-out,border-color .3s ease-out}
-  .pp2-row.open{background:var(--green-tint);border-color:var(--green)}
-  .pp2-head{width:100%;text-align:left;background:none;border:none;font-family:inherit;color:inherit;cursor:pointer;padding:22px 24px;display:flex;align-items:center;gap:14px}
-  .pp2-head .ic{width:18px;height:16px;flex:0 0 18px;color:var(--green)}
-  .pp2-head .ic svg{width:100%;height:100%}
-  .pp2-head .t{flex:1;font-size:15px;color:var(--ink);min-width:0}
-  .pp2-row.open .chev{transform:rotate(180deg);color:var(--green)}
-  .pp2-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease-out}
-  .pp2-row.open .pp2-body{grid-template-rows:1fr}
-  .pp2-body>div{overflow:hidden}
-  .pp2-body-inner{padding:0 24px 22px;font-size:14px;line-height:1.65;color:var(--ink);opacity:.9;max-width:1150px}
+  .sol-card .hover-overlay{
+    position:absolute;inset:0;background:var(--green);border-radius:12px;
+    display:flex;align-items:center;justify-content:center;padding:32px;text-align:center;
+    opacity:0;pointer-events:none;transition:opacity .3s ease-out;
+  }
+  .sol-card:hover .hover-overlay{opacity:1}
+  .sol-card .hover-overlay p{color:#fff;font-size:16px;font-weight:600;line-height:1.5}
 
   /* mobile */
   .menu-toggle{display:none}
@@ -174,15 +140,12 @@
     .menu-toggle{display:inline-flex;align-items:center;justify-content:center;position:fixed;top:14px;left:14px;z-index:60;width:44px;height:44px;background:#fff;border:1px solid var(--card-line);border-radius:10px;cursor:pointer;color:var(--ink);box-shadow:0 4px 14px rgba(0,0,0,.08)}
     .menu-toggle svg{width:22px;height:22px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round}
     .collapse-btn{display:none}
-    .sidebar{position:fixed;left:0;top:0;z-index:70;transform:translateX(-100%);transition:transform .3s ease;box-shadow:0 0 40px rgba(0,0,0,.18)}
+    .sidebar{position:fixed;left:0;top:0;z-index:70;transform:translateX(-100%);transition:transform .3s ease-out;box-shadow:0 0 40px rgba(0,0,0,.18)}
     .sidebar.collapsed{width:var(--sidebar-w);flex-basis:var(--sidebar-w);padding:26px 22px;align-items:stretch}
     body.nav-open .sidebar{transform:translateX(0)}
     body.nav-open .backdrop{display:block;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:65}
     .content{padding-top:74px}
-    .cat-tabs{grid-template-columns:1fr}
-    .cat-connector{grid-template-columns:1fr}
-    .cat-connector .cell{display:none}
-    .cat-connector .cell.active{display:flex}
+    .sol-grid{grid-template-columns:1fr}
   }
 </style>
 </head>
@@ -197,15 +160,13 @@
   <main class="content">
     <div class="content-inner">
       <header class="page-head">
-        <h1>Pain Points del Processo di Vendita</h1>
-        <p class="intro">Questa sezione raccoglie le principali criticità emerse dall'analisi del processo di vendita di RDS Advertising. L'obiettivo è fornire una mappa strutturata, facilmente esplorabile e utile per identificare rapidamente inefficienze operative, tecnologiche e strategiche. I pain points sono suddivisi in tre macro categorie: Processo, Software e Intelligenza Artificiale.</p>
+        <h1>Sales Platform</h1>
+        <p class="intro">Le soluzioni tecnologiche a supporto del processo di vendita RDS Advertising: strumenti, integrazioni e moduli pensati per digitalizzare e velocizzare il lavoro quotidiano della rete commerciale.</p>
       </header>
 
-      <div class="cat" id="totalCat"><span class="ic"></span><span class="txt" id="totalCatTxt"></span><span class="line"></span></div>
+      <div class="cat"><span class="ic"></span><span class="txt">Sales Platform</span><span class="line"></span></div>
 
-      <div class="cat-tabs" id="catTabs"></div>
-      <div class="cat-connector" id="catConnector"></div>
-      <div class="pp2-list" id="ppList"></div>
+      <div class="sol-grid" id="solGrid"></div>
     </div>
   </main>
 </div>
@@ -219,20 +180,14 @@ const I = {
   layers:'<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m6.08 9.5-3.48 1.59a1 1 0 0 0 0 1.81l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9a1 1 0 0 0 0-1.83L17.92 9.5"/><path d="m6.08 14.5-3.48 1.59a1 1 0 0 0 0 1.81l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9a1 1 0 0 0 0-1.83l-3.5-1.59"/>',
   card:'<path d="M4 10h12"/><path d="M4 14h9"/><path d="M19 6a7.7 7.7 0 1 0 0 12"/>',
   info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
-  chevDown:'<path d="m6 9 6 6 6-6"/>',
-  clock:'<circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/>',
-  arrowDown:'<path d="M7 2v16M7 18l-4-4M7 18l4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+  database:'<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>',
+  chart:'<path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>',
+  target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  settings:'<path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>'
 };
-/* icone dei 3 box categoria — path esatti estratti dai file .svg del cliente */
-const ICX = {
-  workflow: {vb:'440.9 309 17.1 15', d:'M444.999 309.993C445.832 309.993 446.541 310.285 447.124 310.868C447.707 311.451 447.999 312.16 447.999 312.993C447.999 313.826 447.707 314.535 447.124 315.118C446.541 315.701 445.832 315.993 444.999 315.993C444.851 315.993 444.703 315.979 444.555 315.951C444.407 315.923 444.255 315.889 444.103 315.848L442.77 317.993C442.506 318.41 442.433 318.809 442.551 319.191C442.669 319.573 442.881 319.882 443.187 320.118C443.492 320.354 443.843 320.473 444.238 320.473C444.634 320.473 444.999 320.292 445.332 319.931L451.562 313.056C452.2 312.347 452.909 311.993 453.687 311.993C454.464 311.993 455.144 312.216 455.728 312.66C456.311 313.105 456.711 313.698 456.926 314.441C457.141 315.184 456.999 315.966 456.499 316.785L455.165 318.931C455.429 319.208 455.635 319.521 455.78 319.868C455.926 320.215 455.999 320.59 455.999 320.993C455.999 321.826 455.707 322.535 455.124 323.118C454.541 323.701 453.832 323.993 452.999 323.993C452.166 323.993 451.457 323.701 450.874 323.118C450.291 322.535 449.999 321.826 449.999 320.993C449.999 320.16 450.291 319.451 450.874 318.868C451.457 318.285 452.166 317.993 452.999 317.993C453.153 317.993 453.302 318.007 453.447 318.035C453.593 318.063 453.742 318.097 453.895 318.139L455.228 315.993C455.491 315.577 455.564 315.174 455.446 314.785C455.328 314.396 455.117 314.084 454.812 313.848C454.506 313.612 454.152 313.497 453.749 313.504C453.346 313.511 452.985 313.695 452.665 314.056L446.437 320.931C445.798 321.639 445.086 321.989 444.301 321.982C443.516 321.975 442.832 321.75 442.249 321.306C441.666 320.861 441.27 320.267 441.062 319.524C440.853 318.781 440.999 318.007 441.499 317.201L442.832 315.056C442.568 314.778 442.364 314.465 442.218 314.118C442.072 313.771 441.999 313.396 441.999 312.993C441.999 312.16 442.291 311.451 442.874 310.868C443.457 310.285 444.166 309.993 444.999 309.993ZM452.994 319.493C452.581 319.493 452.228 319.64 451.937 319.935C451.645 320.229 451.499 320.584 451.499 320.997C451.499 321.411 451.646 321.764 451.941 322.056C452.235 322.347 452.589 322.493 453.003 322.493C453.417 322.493 453.77 322.346 454.062 322.052C454.353 321.757 454.499 321.403 454.499 320.989C454.499 320.576 454.351 320.222 454.057 319.931C453.762 319.639 453.408 319.493 452.994 319.493ZM444.994 311.493C444.581 311.493 444.228 311.64 443.937 311.935C443.645 312.229 443.499 312.584 443.499 312.997C443.499 313.411 443.646 313.764 443.941 314.056C444.235 314.347 444.589 314.493 445.003 314.493C445.417 314.493 445.77 314.346 446.062 314.052C446.353 313.757 446.499 313.403 446.499 312.989C446.499 312.576 446.351 312.222 446.057 311.931C445.762 311.639 445.408 311.493 444.994 311.493Z'},
-  code: {vb:'957.6 310.7 18.1 12.6', d:'M969.249 311.223L965.499 323.223L964.061 322.764L967.811 310.764L969.249 311.223ZM962.478 314.306L959.791 316.993L962.478 319.681L961.416 320.743L957.666 316.993L961.416 313.243L962.478 314.306ZM975.666 316.993L971.916 320.743L970.853 319.681L973.541 316.993L970.853 314.306L971.916 313.243L975.666 316.993Z'},
-  smile: {vb:'1476.3 308.99 16.05 16.01', d:'M1484.34 308.993C1485.45 308.993 1486.48 309.201 1487.45 309.618C1488.41 310.035 1489.26 310.608 1489.99 311.337C1490.72 312.066 1491.29 312.915 1491.71 313.883C1492.12 314.851 1492.33 315.886 1492.33 316.987C1492.33 318.088 1492.12 319.125 1491.71 320.098C1491.29 321.07 1490.72 321.92 1489.99 322.649C1489.26 323.379 1488.41 323.951 1487.44 324.368C1486.47 324.785 1485.44 324.993 1484.34 324.993C1483.24 324.993 1482.2 324.785 1481.23 324.368C1480.26 323.952 1479.4 323.378 1478.68 322.649C1477.95 321.92 1477.37 321.07 1476.96 320.099C1476.54 319.127 1476.33 318.088 1476.33 316.983C1476.33 315.879 1476.54 314.844 1476.96 313.879C1477.37 312.914 1477.95 312.066 1478.68 311.337C1479.4 310.608 1480.26 310.035 1481.23 309.618C1482.2 309.202 1483.24 308.993 1484.34 308.993ZM1484.33 310.493C1482.53 310.493 1480.99 311.125 1479.73 312.389C1478.46 313.653 1477.83 315.188 1477.83 316.993C1477.83 318.799 1478.46 320.334 1479.73 321.598C1480.99 322.861 1482.53 323.493 1484.33 323.493C1486.14 323.493 1487.67 322.861 1488.94 321.598C1490.2 320.334 1490.83 318.799 1490.83 316.993C1490.83 315.188 1490.2 313.653 1488.94 312.389C1487.67 311.125 1486.14 310.493 1484.33 310.493ZM1481.75 318.493C1482.02 318.956 1482.39 319.321 1482.85 319.59C1483.31 319.859 1483.8 319.993 1484.33 319.993C1484.86 319.993 1485.35 319.859 1485.81 319.59C1486.27 319.321 1486.64 318.956 1486.92 318.493H1488.56C1488.27 319.41 1487.73 320.139 1486.95 320.681C1486.16 321.222 1485.29 321.493 1484.33 321.493C1483.37 321.493 1482.5 321.222 1481.71 320.681C1480.93 320.139 1480.39 319.41 1480.1 318.493H1481.75ZM1481.58 313.993C1481.93 313.993 1482.22 314.115 1482.47 314.357C1482.71 314.6 1482.83 314.896 1482.83 315.243C1482.83 315.59 1482.71 315.886 1482.47 316.129C1482.22 316.372 1481.93 316.493 1481.58 316.493C1481.23 316.493 1480.94 316.372 1480.7 316.129C1480.45 315.886 1480.33 315.59 1480.33 315.243C1480.33 314.896 1480.45 314.6 1480.7 314.357C1480.94 314.115 1481.23 313.993 1481.58 313.993ZM1487.08 313.993C1487.43 313.993 1487.72 314.115 1487.97 314.357C1488.21 314.6 1488.33 314.896 1488.33 315.243C1488.33 315.59 1488.21 315.886 1487.97 316.129C1487.72 316.372 1487.43 316.493 1487.08 316.493C1486.73 316.493 1486.44 316.372 1486.2 316.129C1485.95 315.886 1485.83 315.59 1485.83 315.243C1485.83 314.896 1485.95 314.6 1486.2 314.357C1486.44 314.115 1486.73 313.993 1487.08 313.993Z'}
-};
-function iconx(key){ const o=ICX[key]; return '<svg viewBox="'+o.vb+'"><path d="'+o.d+'" fill="currentColor"/></svg>'; }
+function svg(paths,vb){ return '<svg viewBox="'+(vb||'0 0 24 24')+'">'+paths+'</svg>'; }
 /* chevron di collapse: path esatto estratto dal file .svg del cliente (icona piena, non stroke) */
 const CHEV_COLLAPSE = '<svg viewBox="0 0 9 15"><path d="M3.155 7.5L9 1.594L7.423 0L0 7.5L7.423 15L9 13.406L3.155 7.5Z" fill="currentColor"/></svg>';
-function svg(paths,vb){ return '<svg viewBox="'+(vb||'0 0 24 24')+'">'+paths+'</svg>'; }
 /* logo iSquared (path estratto dal file .svg del cliente) */
 const ISQ = '<svg viewBox="40 679 32 40"><path d="M72 707.895L62.0165 681.47L61.3024 679.579H54.8582L40 719L48.1955 714.328L58.083 688.115L63.2809 701.874H55.3951L62.6808 707.895H65.5558H72V707.895Z"/></svg>';
 
@@ -243,7 +198,7 @@ const NAV = [
   {icon:'layers',   label:'Sales Platform', href:'sales_platform.html'},
   {icon:'card',     label:'Pianificazione e Costi', dark:true}
 ];
-const ACTIVE_PAGE = 'pain_points.html';
+const ACTIVE_PAGE = 'sales_platform.html';
 
 function renderSidebar(){
   const s = document.getElementById('sidebar');
@@ -253,7 +208,6 @@ function renderSidebar(){
     return '<'+tag+' class="nav-item'+(active?' active':'')+(n.dark?' dark':'')+'">'+
       '<span class="ic">'+svg(I[n.icon])+'</span>'+
       '<span class="label">'+n.label+'</span>'+
-      (n.dropdown?'<span class="chev-drop">'+svg(I.chevDown)+'</span>':'')+
     '</a>';
   }).join('');
   s.innerHTML =
@@ -275,109 +229,47 @@ function renderSidebar(){
   document.getElementById('collapseBtn').addEventListener('click',()=>document.getElementById('sidebar').classList.toggle('collapsed'));
 }
 
-/* ===== Dati Pain Points — 3 macro categorie. Le voci con desc:null saranno completate a mano. ===== */
-const CATS = [
-  { key:'processo', icon:'workflow', count:5, labelPre:'di ', labelBold:'Processo', share:33,
-    desc:"Questa categoria raccoglie tutte le inefficienze legate all'organizzazione del lavoro, alla distribuzione dei carichi operativi, alla standardizzazione delle procedure e alla comunicazione tra i reparti.",
-    items:[
-      {title:'Sovraccarico funzionale e ruoli impropri', desc:"A causa di un organigramma sbilanciato, molti dipartimenti si trovano a svolgere attività al di fuori del proprio core business. Questo genera sovraccarichi operativi, inefficienze e perdita di focus strategico."},
-      {title:'Mancanza di standardizzazione dei brief e delle richieste', desc:null},
-      {title:'Mancanza di vocabolario operativo condiviso', desc:null},
-      {title:'Flussi di comunicazione destrutturati', desc:null},
-      {title:'Assenza di feedback loop sulle trattative', desc:null}
-    ]
-  },
-  { key:'software', icon:'code', count:5, labelPre:'relativi ai ', labelBold:'Software', share:33,
-    desc:"Questa categoria include le criticità derivanti da infrastrutture IT obsolete, sistemi non integrati e mancanza di piattaforme fondamentali per la gestione del processo commerciale.",
-    items:[
-      {title:'Uso di sistemi legacy e isolamento tecnologico', desc:"La rete di vendita locale utilizza sistemi obsoleti come AS400 in ambiente DOS e una VPN inefficiente. L'impossibilità di accedere ai dati in mobilità costringe i venditori a dipendere dal back-office per verifiche di base."},
-      {title:'Mancata integrazione tra sistemi (silos IT)', desc:null},
-      {title:'Assenza di CRM e Ticketing System', desc:null},
-      {title:'Repository documentale disorganizzato', desc:null},
-      {title:'Mancanza di dashboard dati dinamiche', desc:null}
-    ]
-  },
-  { key:'ia', icon:'smile', count:3, labelPre:'risolvibili con ', labelBold:"l'AI", share:33,
-    desc:"Questa categoria identifica inefficienze operative che rappresentano opportunità concrete per l'implementazione di soluzioni basate su Intelligenza Artificiale.",
-    items:[
-      {title:'Knowledge management e ricerca documentale intelligente', desc:"Il caos del repository documentale può essere risolto con un sistema AI addestrato sul patrimonio informativo aziendale. Gli account potrebbero interrogare il sistema in linguaggio naturale e ottenere risposte immediate."},
-      {title:'Estrazione dati da documenti non strutturati', desc:null},
-      {title:'Supporto AI alla proposizione commerciale', desc:null}
-    ]
-  }
+/* =====================================================================
+   Contenuto dei box "Sales Platform": il testo esatto non era recuperabile
+   dal file .svg (le card usano un'icona/immagine non incorporata nel file).
+   MODIFICA QUI sotto icon / title / desc / hoverText per personalizzare
+   ciascuno dei 5 box, incluso il testo che compare al passaggio del mouse.
+   ===================================================================== */
+const SOLUTIONS = [
+  { icon:'database', title:'Modulo 1 — personalizza titolo',
+    desc:'Descrizione del modulo: sostituisci questo testo con il contenuto reale.',
+    hoverText:'Testo al passaggio del mouse — personalizzabile' },
+  { icon:'chart', title:'Modulo 2 — personalizza titolo',
+    desc:'Descrizione del modulo: sostituisci questo testo con il contenuto reale.',
+    hoverText:'Testo al passaggio del mouse — personalizzabile' },
+  { icon:'target', title:'Modulo 3 — personalizza titolo',
+    desc:'Descrizione del modulo: sostituisci questo testo con il contenuto reale.',
+    hoverText:'Testo al passaggio del mouse — personalizzabile' },
+  { icon:'users', title:'Modulo 4 — personalizza titolo',
+    desc:'Descrizione del modulo: sostituisci questo testo con il contenuto reale.',
+    hoverText:'Testo al passaggio del mouse — personalizzabile' },
+  { icon:'settings', title:'Modulo 5 — personalizza titolo',
+    desc:'Descrizione del modulo: sostituisci questo testo con il contenuto reale.',
+    hoverText:'Testo al passaggio del mouse — personalizzabile' }
 ];
-
-let activeCat = 0;
 
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-function renderTabs(){
-  const wrap=document.getElementById('catTabs');
-  wrap.innerHTML = CATS.map((c,i)=>
-    '<button class="cat-tab'+(i===activeCat?' active':'')+'" data-i="'+i+'">'+
-      '<div class="head">'+
-        '<span class="icon-badge"><span class="ic">'+iconx(c.icon)+'</span></span>'+
-        '<span class="title"><b>'+c.count+'</b> '+esc(c.labelPre)+'<b>'+esc(c.labelBold)+'</b></span>'+
-      '</div>'+
-      '<div class="desc">'+esc(c.desc)+'</div>'+
-      '<div class="divider"></div>'+
-      '<div class="progress"><div class="track"><div class="fill" style="width:'+c.share+'%"></div></div><div class="pct">'+c.share+'%</div></div>'+
-    '</button>').join('');
-  wrap.querySelectorAll('.cat-tab').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      activeCat = +btn.dataset.i;
-      renderTabs();
-      renderConnector();
-      renderList();
-    });
-  });
-}
-
-function renderConnector(){
-  const wrap=document.getElementById('catConnector');
-  wrap.innerHTML = CATS.map((c,i)=>
-    '<div class="cell'+(i===activeCat?' active':'')+'">'+
-      (i===activeCat ? '<span class="arrow">'+svg(I.arrowDown,'0 0 14 22')+'</span>' : '')+
+function renderSolutions(){
+  const wrap=document.getElementById('solGrid');
+  wrap.innerHTML = SOLUTIONS.map(s=>
+    '<div class="sol-card">'+
+      '<div class="badge"><span class="ic">'+svg(I[s.icon])+'</span></div>'+
+      '<h3>'+esc(s.title)+'</h3>'+
+      '<div class="preview"></div>'+
+      '<p class="desc">'+esc(s.desc)+'</p>'+
+      '<div class="hover-overlay"><p>'+esc(s.hoverText)+'</p></div>'+
     '</div>').join('');
-}
-
-function renderList(){
-  const wrap=document.getElementById('ppList');
-  const cat=CATS[activeCat];
-  wrap.innerHTML = cat.items.map((it,i)=>
-    '<div class="pp2-row" data-i="'+i+'">'+
-      '<button class="pp2-head" aria-expanded="false">'+
-        '<span class="ic">'+iconx(cat.icon)+'</span>'+
-        '<span class="t">'+esc(it.title)+'</span>'+
-        '<span class="chev">'+svg(I.chevDown)+'</span>'+
-      '</button>'+
-      '<div class="pp2-body"><div><div class="pp2-body-inner">'+
-        (it.desc
-          ? esc(it.desc)
-          : '<div class="placeholder"><span class="ic">'+svg(I.clock)+'</span><b>Contenuto in preparazione</b><span>Il dettaglio di questo pain point sarà disponibile a breve.</span></div>')
-      +'</div></div></div>'+
-    '</div>').join('');
-  wrap.querySelectorAll('.pp2-head').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const row=btn.closest('.pp2-row'), open=row.classList.contains('open');
-      wrap.querySelectorAll('.pp2-row.open').forEach(o=>{ if(o!==row){o.classList.remove('open');o.querySelector('.pp2-head').setAttribute('aria-expanded','false');}});
-      row.classList.toggle('open',!open);
-      btn.setAttribute('aria-expanded',String(!open));
-    });
-  });
-}
-
-function renderTotal(){
-  const total = CATS.reduce((s,c)=>s+c.count,0);
-  document.getElementById('totalCat').querySelector('.ic').innerHTML = svg(I.alert);
-  document.getElementById('totalCatTxt').textContent = total+' Pain points individuati';
 }
 
 renderSidebar();
-renderTotal();
-renderTabs();
-renderConnector();
-renderList();
+renderSolutions();
+document.querySelector('.cat .ic').innerHTML = svg(I.layers);
 
 /* menu mobile */
 const body=document.body;
